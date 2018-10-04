@@ -10,9 +10,9 @@ import { closureToJS } from './interop'
  * different implementations. e.g display() in a web application.
  */
 export interface CustomBuiltIns {
-  display: (value: Value, externalContext: any) => void,
-  prompt: (value: Value, externalContext: any) => string | null,
-  alert: (value: Value, externalContext: any) => void,
+  display: (value: Value, externalContext: any) => void
+  prompt: (value: Value, externalContext: any) => string | null
+  alert: (value: Value, externalContext: any) => void
   /* Used for list visualisation. See #12 */
   visualiseList: (list: any, externalContext: any) => void
 }

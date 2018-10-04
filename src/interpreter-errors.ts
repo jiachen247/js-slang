@@ -177,12 +177,11 @@ export class EmptyForExpression implements SourceError {
   }
 
   public explain() {
-    const exp = this.missing.length > 1 ? 'expressions': 'expression'
+    const exp = this.missing.length > 1 ? 'expressions' : 'expression'
     return `For statement cannot have empty ${this.missing.join(',')} ${exp}.`
   }
 
   public elaborate() {
     return 'TODO'
   }
-
 }

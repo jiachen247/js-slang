@@ -218,7 +218,6 @@ export const freshId = (() => {
 const mapToObj = (map: Map<string, any>) =>
   Array.from(map).reduce((obj, [k, v]) => Object.assign(obj, { [k]: v }), {})
 
-const walkers: { [name: string]: (node: es.Node, ctxt: Context) => void } = createWalkers(
-  syntaxTypes,
-  rules
-)
+const walkers: {
+  [name: string]: (node: es.Node, ctxt: Context) => void
+} = createWalkers(syntaxTypes, rules)

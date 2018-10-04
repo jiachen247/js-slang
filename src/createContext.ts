@@ -1,7 +1,7 @@
 import * as list from './stdlib/list'
 import * as misc from './stdlib/misc'
 import { Context, CustomBuiltIns, Value } from './types'
-import { toString } from '.';
+import { toString } from '.'
 
 /** Import meta-circular parser */
 const createParserModule = require('./stdlib/parser')
@@ -22,7 +22,11 @@ const createEmptyRuntime = () => ({
   nodes: []
 })
 
-export const createEmptyContext = <T>(chapter: number, externalSymbols: string[], externalContext?: T): Context<T> => ({
+export const createEmptyContext = <T>(
+  chapter: number,
+  externalSymbols: string[],
+  externalContext?: T
+): Context<T> => ({
   chapter,
   externalSymbols,
   errors: [],
@@ -79,7 +83,6 @@ export const importBuiltins = (context: Context, externalBuiltIns: CustomBuiltIn
   alert.__SOURCE__ = externalBuiltIns.alert.__SOURCE__
   let visualiseList = (list: any) => externalBuiltIns.visualiseList(list, context.externalContext)
   visualiseList.__SOURCE__ = externalBuiltIns.visualiseList.__SOURCE__
- 
 
   if (context.chapter >= 1) {
     defineSymbol(context, 'runtime', misc.runtime)
@@ -169,7 +172,9 @@ export const importBuiltins = (context: Context, externalBuiltIns: CustomBuiltIn
     // previously week 4
     defineSymbol(context, 'alert', alert)
     // tslint:disable-next-line:ban-types
-    defineSymbol(context, 'timed', (f: Function) => misc.timed(context, f, context.externalContext, externalBuiltIns.display))
+    defineSymbol(context, 'timed', (f: Function) =>
+      misc.timed(context, f, context.externalContext, externalBuiltIns.display)
+    )
     // previously week 5
     defineSymbol(context, 'assoc', list.assoc)
     // previously week 6
@@ -183,11 +188,16 @@ const defaultBuiltIns: CustomBuiltIns = {
   // See issue #11
   alert: misc.display,
   visualiseList: (list: any) => {
-    throw new Error('List visualizer is not enabled')}
+    throw new Error('List visualizer is not enabled')
+  }
 }
 
-const createContext = <T>(chapter = 1, externalSymbols: string[] = [], externalContext?: T, 
-  externalBuiltIns: CustomBuiltIns = defaultBuiltIns) => {
+const createContext = <T>(
+  chapter = 1,
+  externalSymbols: string[] = [],
+  externalContext?: T,
+  externalBuiltIns: CustomBuiltIns = defaultBuiltIns
+) => {
   const context = createEmptyContext(chapter, externalSymbols, externalContext)
 
   importBuiltins(context, externalBuiltIns)
