@@ -21,8 +21,9 @@
     "dist"
   ],
   "scripts": {
-    "prepublishOnly": "tsc",
     "build": "scripts/build.sh",
+    "format": "prettier --write 'src/**/*.{ts,tsx}'",
+    "prepublishOnly": "tsc",
     "test": "jest",
     "test-coveralls": "jest --coverage --coverageReporters=text-lcov | coveralls"
   },
@@ -43,6 +44,7 @@
     "babel-preset-stage-2": "^6.24.1",
     "coveralls": "^3.0.1",
     "jest": "^23.3.0",
+    "prettier": "^1.14.3",
     "ts-jest": "^23.0.0",
     "typescript": "^2.7.2"
   },
