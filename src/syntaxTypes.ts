@@ -45,8 +45,7 @@ const syntaxTypes: { [nodeName: string]: number } = {
   DoWhileStatement: Infinity,
   ForInStatement: Infinity,
   SequenceExpression: Infinity,
-  FunctionExpression: Infinity,
-
+  FunctionExpression: Infinity
 }
 
 export default syntaxTypes

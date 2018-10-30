@@ -142,15 +142,10 @@ export const importBuiltins = (context: Context, externalBuiltIns: CustomBuiltIn
 
   if (context.chapter >= 4) {
     defineSymbol(context, 'stringify', JSON.stringify)
-    defineSymbol(context, 'parse',
-      function () { 
-        return context.metaCircularParser
-          .parse.apply(context.metaCircularParser, arguments)
-      });
-    defineSymbol(context, 'apply_in_underlying_javascript', function(
-      fun: Function,
-      args: Value
-    ) {
+    defineSymbol(context, 'parse', function() {
+      return context.metaCircularParser.parse.apply(context.metaCircularParser, arguments)
+    })
+    defineSymbol(context, 'apply_in_underlying_javascript', function(fun: Function, args: Value) {
       const res = []
       var i = 0
       while (!(args.length === 0)) {
