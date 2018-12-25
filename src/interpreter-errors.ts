@@ -73,7 +73,9 @@ export class MaximumStackLimitExceeded extends RuntimeSourceError {
 
   public explain() {
     const repr = (call: es.CallExpression) => generate(call, { generator: this.customGenerator })
-    return 'Infinite recursion\n  ' + this.calls.map(call => repr(call) + '..').join('  ')
+    return (
+      'Maximum call stack size exceeded\n  ' + this.calls.map(call => repr(call) + '..').join('  ')
+    )
   }
 
   public elaborate() {
@@ -166,12 +168,30 @@ export class ConstAssignment extends RuntimeSourceError {
 }
 
 export class GetPropertyError extends RuntimeSourceError {
-  constructor(node: es.Node, private obj: es.Node, private prop: string) {
+  constructor(node: es.Node, private obj: Value, private prop: string) {
     super(node)
   }
 
   public explain() {
-    return `Cannot read property ${this.prop} of ${this.obj}`
+    return `Cannot read property ${this.prop} of ${stringify(this.obj)}`
+  }
+
+  public elaborate() {
+    return 'TODO'
+  }
+}
+
+export class GetInheritedPropertyError implements RuntimeSourceError {
+  public type = ErrorType.RUNTIME
+  public severity = ErrorSeverity.ERROR
+  public location: es.SourceLocation
+
+  constructor(node: es.Node, private obj: Value, private prop: string) {
+    this.location = node.loc!
+  }
+
+  public explain() {
+    return `Cannot read inherited property ${this.prop} of ${stringify(this.obj)}`
   }
 
   public elaborate() {
@@ -180,12 +200,12 @@ export class GetPropertyError extends RuntimeSourceError {
 }
 
 export class SetPropertyError extends RuntimeSourceError {
-  constructor(node: es.Node, private obj: es.Node, private prop: string) {
+  constructor(node: es.Node, private obj: Value, private prop: string) {
     super(node)
   }
 
   public explain() {
-    return `Cannot assign property ${this.prop} of ${this.obj}`
+    return `Cannot assign property ${this.prop} of ${stringify(this.obj)}`
   }
 
   public elaborate() {
